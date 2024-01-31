@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="lqB-YJ-rOL">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Home Contoller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController storyboardIdentifier="home" id="BYZ-38-t0r" customClass="HomeContoller" customModule="StudentTeacherData" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EK0-Ja-ozG">
+                                <rect key="frame" x="30" y="194" width="140" height="140"/>
+                                <color key="backgroundColor" systemColor="systemGray3Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="140" id="Pve-4H-gvi"/>
+                                    <constraint firstAttribute="height" constant="140" id="oyl-w6-hpJ"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Add Student"/>
+                                <connections>
+                                    <action selector="addStudentAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="P1R-Xn-f3T"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Xc-77-Q0i">
+                                <rect key="frame" x="30" y="528" width="140" height="140"/>
+                                <color key="backgroundColor" systemColor="tertiarySystemFillColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="140" id="Kuf-yB-eYW"/>
+                                    <constraint firstAttribute="height" constant="140" id="vCb-Ab-olE"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Add Teacher"/>
+                                <connections>
+                                    <action selector="addTeacherAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VBM-9U-W2h"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdK-e4-NnS">
+                                <rect key="frame" x="244" y="528" width="140" height="140"/>
+                                <color key="backgroundColor" systemColor="systemGray3Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="140" id="Tzr-BU-Vzw"/>
+                                    <constraint firstAttribute="height" constant="140" id="aZi-av-pzz"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Fetch Teacher"/>
+                                <connections>
+                                    <action selector="fetchTeacherAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hcN-uU-cNE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dwS-y2-AGm">
+                                <rect key="frame" x="244" y="194" width="140" height="140"/>
+                                <color key="backgroundColor" systemColor="tertiarySystemFillColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="140" id="NmG-rS-o55"/>
+                                    <constraint firstAttribute="width" constant="140" id="lYP-V6-z9Z"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Fetch Student"/>
+                                <connections>
+                                    <action selector="fetchStudentAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aJC-kH-4Jn"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="rdK-e4-NnS" firstAttribute="leading" secondItem="0Xc-77-Q0i" secondAttribute="trailing" constant="74" id="GLF-wU-J1A"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="rdK-e4-NnS" secondAttribute="trailing" constant="30" id="JI9-CA-mAA"/>
+                            <constraint firstItem="EK0-Ja-ozG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="NVQ-av-Bnv"/>
+                            <constraint firstItem="0Xc-77-Q0i" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="WKz-Em-HEv"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="rdK-e4-NnS" secondAttribute="bottom" constant="194" id="Wh9-2p-S8L"/>
+                            <constraint firstItem="0Xc-77-Q0i" firstAttribute="top" secondItem="EK0-Ja-ozG" secondAttribute="bottom" constant="194" id="gZA-1w-VB6"/>
+                            <constraint firstItem="dwS-y2-AGm" firstAttribute="leading" secondItem="EK0-Ja-ozG" secondAttribute="trailing" constant="74" id="j0w-qS-z0e"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dwS-y2-AGm" secondAttribute="trailing" constant="30" id="nmg-lf-KHr"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0Xc-77-Q0i" secondAttribute="bottom" constant="194" id="wZF-w6-M7E"/>
+                            <constraint firstItem="rdK-e4-NnS" firstAttribute="top" secondItem="dwS-y2-AGm" secondAttribute="bottom" constant="194" id="wqm-0a-wFV"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Vhv-Fa-Dm3"/>
+                    <connections>
+                        <outlet property="addStudentButton" destination="EK0-Ja-ozG" id="dtv-VI-z1m"/>
+                        <outlet property="addTeacherButton" destination="0Xc-77-Q0i" id="FQC-dX-mCf"/>
+                        <outlet property="fetchStudentButton" destination="dwS-y2-AGm" id="oWb-jQ-Cmb"/>
+                        <outlet property="fetchTeacherButton" destination="rdK-e4-NnS" id="3dw-rm-8es"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="944.92753623188412" y="97.767857142857139"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="bnD-fb-jDE">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lqB-YJ-rOL" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hWq-sZ-42E">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="GgR-zh-Xcu"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fqJ-gO-WwX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="34.782608695652179" y="97.767857142857139"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray3Color">
+            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiarySystemFillColor">
+            <color red="0.46274509803921571" green="0.46274509803921571" blue="0.50196078431372548" alpha="0.12" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
