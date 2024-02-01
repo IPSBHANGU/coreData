@@ -2,7 +2,7 @@
 //  Student+CoreDataProperties.swift
 //  StudentTeacherData
 //
-//  Created by Vishu on 29/01/24.
+//  Created by Vishu on 31/01/24.
 //
 //
 
@@ -20,6 +20,7 @@ extension Student {
     @NSManaged public var course: String?
     @NSManaged public var id: Int16
     @NSManaged public var name: String?
+    @NSManaged public var isSelected: Bool
     @NSManaged public var teacher: NSSet?
 
 }

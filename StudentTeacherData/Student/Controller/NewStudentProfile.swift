@@ -77,25 +77,57 @@ class NewStudentProfile: UIViewController {
         if nameText.text?.isEmpty ?? true {
             alertUserWithoutAction(title: "Enter Student Name", message: "Student Name cannot be empty!")
             nameText.layer.borderColor = UIColor.red.cgColor
+            nameText.shake()
             return false
         } else if ageText.text?.isEmpty ?? true {
             alertUserWithoutAction(title: "Enter Student Age", message: "Student Age required!")
             ageText.layer.borderColor = UIColor.red.cgColor
+            ageText.shake()
             return false
         } else if idText.text?.isEmpty ?? true {
             alertUserWithoutAction(title: "Enter Student ID", message: "Student ID required!")
             idText.layer.borderColor = UIColor.red.cgColor
+            idText.shake()
             return false
         } else if teacherText.text?.isEmpty ?? true {
             alertUserWithoutAction(title: "Select Teacher", message: "Teacher Field cannot be empty!")
             teacherText.layer.borderColor = UIColor.red.cgColor
+            teacherText.shake()
             return false
         } else if courseText.text?.isEmpty ?? true {
             alertUserWithoutAction(title: "Select Course", message: "Student Course cannot be kept empty!")
             courseText.layer.borderColor = UIColor.red.cgColor
+            courseText.shake()
+            return false
+        } else if checkAgeTextField() == false {
+            return false
+        } else if checkIDTextField() == false {
             return false
         } else {
             return true
+        }
+    }
+    
+    func checkAgeTextField() -> Bool{
+        if textFieldContainsOnlyInt(ageText){
+            return true
+        } else {
+            alertUserWithoutAction(title: "Enter Valid Student Age", message: "Student Age should only be in Numbers!")
+            ageText.layer.borderColor = UIColor.red.cgColor
+            ageText.shake()
+            return false
+        }
+        
+    }
+    
+    func checkIDTextField() -> Bool{
+        if textFieldContainsOnlyInt(idText){
+            return true
+        } else {
+            alertUserWithoutAction(title: "Enter Valid Student ID", message: "Student ID should only be in Numbers!")
+            idText.layer.borderColor = UIColor.red.cgColor
+            idText.shake()
+            return false
         }
     }
     
@@ -115,7 +147,7 @@ class NewStudentProfile: UIViewController {
     
     @IBAction func submitAction(_ sender: Any) {
         if checkTextFeilds() == true {
-            if (studentDataModel.insertDataObject(name: nameText.text ?? "Name", age: Int16(ageText.text ?? "") ?? 0, id: Int16(idText.text ?? "") ?? 0, course: courseText.text ?? "Course", teachersName: teachersName)) == true {
+            if (studentDataModel.insertDataObject(name: nameText.text ?? "Name", age: Int16(ageText.text ?? "") ?? 0+1, id: Int16(idText.text ?? "") ?? 0+1, course: courseText.text ?? "Course", teachersName: teachersName)) == true {
                 let okay = UIAlertAction(title: "Okay", style: .default , handler: {_ in
                     // reset Feilds after data insertion
                     self.resetTextFeilds()
@@ -147,6 +179,24 @@ class NewStudentProfile: UIViewController {
         self.present(alert, animated: true)
         
     }
+    
+    func textFieldContainsOnlyInt(_ textField: UITextField) -> Bool {
+        // Allow only digits and optional leading "-" sign
+        let allowedCharacters = CharacterSet.decimalDigits.union(CharacterSet(charactersIn: "-"))
+        let currentText = textField.text ?? ""
+        let hasInvalidCharacters = currentText.rangeOfCharacter(from: allowedCharacters.inverted) != nil
+
+        guard !hasInvalidCharacters else {
+            return false
+        }
+
+        // Ensure the entire text can be converted to an integer (optional)
+        guard let _ = Int(currentText) else {
+            return false
+        }
+
+        return true
+    }
 }
 
 extension NewStudentProfile: UITextFieldDelegate, TeacherSelectionDelegate {
@@ -162,5 +212,23 @@ extension NewStudentProfile: UITextFieldDelegate, TeacherSelectionDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+    }
+}
+
+extension UITextField {
+    func shake(count: Int = 3, duration: TimeInterval = 0.35, translation: CGFloat = 3) {
+        let animation = CAKeyframeAnimation(keyPath: "transform")
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+        animation.repeatCount = Float(count)
+        animation.duration = duration
+        animation.values = [
+            NSValue(caTransform3D: CATransform3DMakeTranslation(0, 0, 0)),
+            NSValue(caTransform3D: CATransform3DMakeTranslation(-translation, 0, 0)),
+            NSValue(caTransform3D: CATransform3DMakeTranslation(translation, 0, 0)),
+            NSValue(caTransform3D: CATransform3DMakeTranslation(-translation, 0, 0)),
+            NSValue(caTransform3D: CATransform3DMakeTranslation(translation, 0, 0)),
+            NSValue(caTransform3D: CATransform3DMakeTranslation(0, 0, 0))
+        ]
+        layer.add(animation, forKey: "shake")
     }
 }

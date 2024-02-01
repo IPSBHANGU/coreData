@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1800E8DC2B6A6209008B2287 /* Student+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1800E8DA2B6A6209008B2287 /* Student+CoreDataClass.swift */; };
+		1800E8DD2B6A6209008B2287 /* Student+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1800E8DB2B6A6209008B2287 /* Student+CoreDataProperties.swift */; };
 		18098B042B68E8F80073286F /* NewTeacherProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18098B022B68E8F80073286F /* NewTeacherProfileController.swift */; };
 		18098B052B68E8F80073286F /* NewTeacherProfileController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18098B032B68E8F80073286F /* NewTeacherProfileController.xib */; };
 		1839B22C2B68E9AD00F584A9 /* TeacherListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839B22A2B68E9AC00F584A9 /* TeacherListViewCell.swift */; };
@@ -26,8 +28,6 @@
 		18E543632B679119007D5B99 /* StudentTeacherData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18E543612B679119007D5B99 /* StudentTeacherData.xcdatamodeld */; };
 		18E543652B67911D007D5B99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18E543642B67911D007D5B99 /* Assets.xcassets */; };
 		18E543682B67911D007D5B99 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18E543662B67911D007D5B99 /* LaunchScreen.storyboard */; };
-		18E5438A2B6796F0007D5B99 /* Student+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E543862B6796F0007D5B99 /* Student+CoreDataClass.swift */; };
-		18E5438B2B6796F0007D5B99 /* Student+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E543872B6796F0007D5B99 /* Student+CoreDataProperties.swift */; };
 		18E5438C2B6796F0007D5B99 /* Teacher+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E543882B6796F0007D5B99 /* Teacher+CoreDataClass.swift */; };
 		18E5438D2B6796F0007D5B99 /* Teacher+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E543892B6796F0007D5B99 /* Teacher+CoreDataProperties.swift */; };
 		18E5438F2B67984A007D5B99 /* HomeContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E5438E2B67984A007D5B99 /* HomeContoller.swift */; };
@@ -39,6 +39,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1800E8DA2B6A6209008B2287 /* Student+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Student+CoreDataClass.swift"; path = "../../../Student+CoreDataClass.swift"; sourceTree = "<group>"; };
+		1800E8DB2B6A6209008B2287 /* Student+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Student+CoreDataProperties.swift"; path = "../../../Student+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		18098B022B68E8F80073286F /* NewTeacherProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTeacherProfileController.swift; sourceTree = "<group>"; };
 		18098B032B68E8F80073286F /* NewTeacherProfileController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewTeacherProfileController.xib; sourceTree = "<group>"; };
 		1839B22A2B68E9AC00F584A9 /* TeacherListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherListViewCell.swift; sourceTree = "<group>"; };
@@ -60,8 +62,6 @@
 		18E543642B67911D007D5B99 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18E543672B67911D007D5B99 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18E543692B67911D007D5B99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		18E543862B6796F0007D5B99 /* Student+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Student+CoreDataClass.swift"; path = "../../../Student+CoreDataClass.swift"; sourceTree = "<group>"; };
-		18E543872B6796F0007D5B99 /* Student+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Student+CoreDataProperties.swift"; path = "../../../Student+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		18E543882B6796F0007D5B99 /* Teacher+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Teacher+CoreDataClass.swift"; sourceTree = "<group>"; };
 		18E543892B6796F0007D5B99 /* Teacher+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Teacher+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		18E5438E2B67984A007D5B99 /* HomeContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContoller.swift; sourceTree = "<group>"; };
@@ -166,8 +166,8 @@
 		18E543752B6793E2007D5B99 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				18E543862B6796F0007D5B99 /* Student+CoreDataClass.swift */,
-				18E543872B6796F0007D5B99 /* Student+CoreDataProperties.swift */,
+				1800E8DA2B6A6209008B2287 /* Student+CoreDataClass.swift */,
+				1800E8DB2B6A6209008B2287 /* Student+CoreDataProperties.swift */,
 				1848BD9B2B67CA30007CE5F8 /* StudentData.swift */,
 			);
 			path = Model;
@@ -330,19 +330,19 @@
 				1848BD9F2B67D19D007CE5F8 /* fetchStudentController.swift in Sources */,
 				18EF1B692B68E43E00AE320D /* fetchTeacherController.swift in Sources */,
 				18EF1B662B68E05700AE320D /* TeacherData.swift in Sources */,
-				18E5438B2B6796F0007D5B99 /* Student+CoreDataProperties.swift in Sources */,
 				18E5438F2B67984A007D5B99 /* HomeContoller.swift in Sources */,
 				1848BD992B67BA5B007CE5F8 /* NewStudentProfile.swift in Sources */,
 				18E543632B679119007D5B99 /* StudentTeacherData.xcdatamodeld in Sources */,
+				1800E8DD2B6A6209008B2287 /* Student+CoreDataProperties.swift in Sources */,
 				1839B22C2B68E9AD00F584A9 /* TeacherListViewCell.swift in Sources */,
 				18E543592B679119007D5B99 /* AppDelegate.swift in Sources */,
 				18EF1B5F2B67D74D00AE320D /* StudentListViewCell.swift in Sources */,
+				1800E8DC2B6A6209008B2287 /* Student+CoreDataClass.swift in Sources */,
 				18E5438D2B6796F0007D5B99 /* Teacher+CoreDataProperties.swift in Sources */,
 				18E5435B2B679119007D5B99 /* SceneDelegate.swift in Sources */,
 				18E5438C2B6796F0007D5B99 /* Teacher+CoreDataClass.swift in Sources */,
 				18098B042B68E8F80073286F /* NewTeacherProfileController.swift in Sources */,
 				18A555432B68FDE000D61DBD /* EditProfileController.swift in Sources */,
-				18E5438A2B6796F0007D5B99 /* Student+CoreDataClass.swift in Sources */,
 				18A555472B69197C00D61DBD /* EditTeacherProfileController.swift in Sources */,
 				1848BD9C2B67CA30007CE5F8 /* StudentData.swift in Sources */,
 			);

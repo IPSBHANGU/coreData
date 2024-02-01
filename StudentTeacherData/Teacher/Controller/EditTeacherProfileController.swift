@@ -22,6 +22,9 @@ class EditTeacherProfileController: UIViewController {
     @IBOutlet weak var studentText: UITextField!
     @IBOutlet weak var deleteButton: UIButton!
     
+    // empty Student Object Array to add Students when selected
+    var studentsName : [Student] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,7 +37,7 @@ class EditTeacherProfileController: UIViewController {
     }
 
     func modifyNavigationBar(){
-        self.navigationItem.title = "Edit Student Profile"
+        self.navigationItem.title = "Edit Teacher Profile"
         let saveButton = UIBarButtonItem(systemItem: .save)
         saveButton.target = self
         saveButton.action = #selector(saveAction(_:))
@@ -57,8 +60,11 @@ class EditTeacherProfileController: UIViewController {
     func setupTextFields(){
         firstNameText.text = teachers?.firstname
         lastNameText.text = teachers?.lastname
-        studentText.text = "Student"
+        studentText.text = teacherDataModel.fetchStudentfromTeacher(teachers: teachers).joined(separator: ", ")
         courseText.text = teachers?.course
+        
+        // Add Tap Gesture at Student TextField to replicate a button Tap
+        captureTapGesture()
     }
     
     func textFieldDelegate(){
@@ -66,6 +72,22 @@ class EditTeacherProfileController: UIViewController {
         lastNameText.delegate = self
         studentText.delegate = self
         courseText.delegate = self
+    }
+    
+    func captureTapGesture(){
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
+        
+        studentText.isUserInteractionEnabled = true
+        studentText.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func handleTapGesture(){
+        // reset teacher textField before switching to new Controller
+        studentText.text = ""
+        let studentListController = fetchStudentController()
+        studentListController.delegate = self
+        studentListController.is_FromNavigation = true
+        self.navigationController?.pushViewController(studentListController, animated: true)
     }
     
     func alertUser(title: String, message: String, action: UIAlertAction) {
@@ -91,7 +113,7 @@ class EditTeacherProfileController: UIViewController {
     }
     
     @objc func saveAction(_ sender: Any) {
-        if (teacherDataModel.updateDataObject(teachers: teachers, teacherFname: firstNameText.text ?? "First Name", teacherLname: lastNameText.text ?? "Last Name", teacherCourse: courseText.text ?? "Course")) == true {
+        if (teacherDataModel.updateDataObject(teachers: teachers, teacherFname: firstNameText.text ?? "First Name", teacherLname: lastNameText.text ?? "Last Name", student: studentsName, teacherCourse: courseText.text ?? "Course")) == true {
             let okay = UIAlertAction(title: "Okay", style: .default , handler: {_ in
                 self.navigationController?.popViewController(animated: true)
             })
@@ -124,7 +146,17 @@ class EditTeacherProfileController: UIViewController {
     
 }
 
-extension EditTeacherProfileController: UITextFieldDelegate {
+extension EditTeacherProfileController: UITextFieldDelegate, StudentSelectionDelegate {
+    func didSelectStudent(_ student: Student) {
+        studentsName.append(student)
+        updateStudentTextField()
+    }
+    
+    private func updateStudentTextField() {
+        let studentNames = studentsName.map { "\($0.name ?? "")" }
+        studentText.text = studentNames.joined(separator: ", ")
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
     }

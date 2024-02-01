@@ -48,11 +48,12 @@ class TeacherData: NSObject {
     }
     
     // save Existing Teacher Object expects Teacher Object as input and returns result
-    func updateDataObject(teachers: Teacher?, teacherFname:String, teacherLname:String, teacherCourse:String) -> Bool{
+    func updateDataObject(teachers: Teacher?, teacherFname:String, teacherLname:String, student:[Student], teacherCourse:String) -> Bool{
         if let context = appDelegate?.persistentContainer.viewContext {
             // update Teacher object
             teachers?.firstname = teacherFname
             teachers?.lastname = teacherLname
+            teachers?.student =  NSSet(array: student)
             teachers?.course = teacherCourse
             
             do {
@@ -79,4 +80,17 @@ class TeacherData: NSObject {
         return false
     }
         
+    // fetch students from teacher object
+    // expects teacher object as input
+    // returns students array
+    func fetchStudentfromTeacher(teachers: Teacher?) -> [String]{
+        var studentsName = [String]()
+        if let students = teachers?.student as? Set<Student> {
+            for student in students {
+                let fetchedStudentName = "\(student.name ?? "")"
+                studentsName.append(fetchedStudentName)
+            }
+        }
+        return studentsName
+    }
 }

@@ -34,13 +34,14 @@ class fetchTeacherController: UIViewController {
         super.viewDidLoad()
 
         modifyNavigationBar()
-        setTableView()
+        modifyTableView()
         fetchTeacherRecords()
         // Do any additional setup after loading the view.
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setTableView()
         teacherTableView.reloadData()
     }
     
@@ -52,6 +53,10 @@ class fetchTeacherController: UIViewController {
         if is_FromNavigation == true {
             self.navigationItem.rightBarButtonItem = doneButton
         }
+    }
+    
+    func modifyTableView(){
+        teacherTableView.backgroundColor = UIColor.systemGroupedBackground
     }
     
     @objc func doneAction(){
@@ -131,9 +136,11 @@ extension fetchTeacherController: UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedTeacher = teachers[indexPath.row]
-        let editProfile = EditTeacherProfileController()
-        editProfile.teachers = selectedTeacher
-        self.navigationController?.pushViewController(editProfile, animated: true)
+        if is_FromNavigation == false {
+            let selectedTeacher = teachers[indexPath.row]
+            let editProfile = EditTeacherProfileController()
+            editProfile.teachers = selectedTeacher
+            self.navigationController?.pushViewController(editProfile, animated: true)
+        }
     }
 }

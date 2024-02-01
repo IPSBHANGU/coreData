@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol StudentSelectionDelegate: AnyObject {
+    func didSelectStudent(_ student: Student )
+}
+
 class fetchStudentController: UIViewController {
     
     @IBOutlet weak var studentTableView: UITableView!
@@ -17,22 +21,75 @@ class fetchStudentController: UIViewController {
     // empty student-Array object
     var students : [Student] = []
     
+    // protocol-delegate
+    weak var delegate: StudentSelectionDelegate?
+    
+    // Students Object for selecting Teachers
+    var teachers : Teacher?
+    
+    // variable to enable button in Cells
+    var is_FromNavigation:Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         modifyNavigationBar()
-        setTableView()
+        modifyTableView()
         fetchStudentRecords()
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setTableView()
         studentTableView.reloadData()
     }
     
     func modifyNavigationBar(){
         self.navigationItem.title = "Student's List"
+        let doneButton = UIBarButtonItem(systemItem: .done)
+        doneButton.target = self
+        doneButton.action = #selector(doneAction)
+        if is_FromNavigation == true {
+            self.navigationItem.rightBarButtonItem = doneButton
+        }
+    }
+    
+    @objc func doneAction(){
+        var studentsArr:[Student]?
+        
+        if let student = teachers?.student as? Set<Student> {
+            studentsArr = Array(student)
+        }
+
+        for student in students {
+            if student.isSelected == true {
+                studentsArr?.append(student)
+                delegate?.didSelectStudent(student)
+            }
+            if student.isSelected == true {
+                student.isSelected = false
+            }
+        }
+        if studentsArr != nil {
+            teachers?.student = NSSet(array: studentsArr!)
+            
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            
+            if let context = appDelegate?.persistentContainer.viewContext {
+                do {
+                    try context.save()
+                    
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func modifyTableView(){
+        studentTableView.backgroundColor = UIColor.systemGroupedBackground
     }
     
     func setTableView(){
@@ -65,26 +122,24 @@ extension fetchStudentController: UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var teachersName = [String]()
         let cell = tableView.dequeueReusableCell(withIdentifier: "studentlist", for: indexPath) as! StudentListViewCell
         
         let student = students[indexPath.row]
 
-        if let teachers = student.teacher as? Set<Teacher> {
-            for teacher in teachers {
-                let fetchedTeacherName =  "\(teacher.firstname ?? "") \(teacher.lastname ?? "")"
-                teachersName.append(fetchedTeacherName)
-            }
+        if is_FromNavigation == true {
+            cell.setCellData(student: student, isCheckMarkHidden: false)
+        } else {
+            cell.setCellData(student: student)
         }
-            
-        cell.setCellData(studentName: student.name, studentAge: Int(student.age), studentId: Int(student.id), studentCourse: student.course, studentTeacherName: "\(teachersName.joined(separator: ", "))")
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedStudent = students[indexPath.row]
-        let editProfile = EditProfileController()
-        editProfile.students = selectedStudent
-        self.navigationController?.pushViewController(editProfile, animated: true)
+        if is_FromNavigation == false {
+            let selectedStudent = students[indexPath.row]
+            let editProfile = EditProfileController()
+            editProfile.students = selectedStudent
+            self.navigationController?.pushViewController(editProfile, animated: true)
+        }
     }
 }

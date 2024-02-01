@@ -60,14 +60,17 @@ class NewTeacherProfileController: UIViewController {
         if firstNameText.text?.isEmpty ?? true {
             alertUserWithoutAction(title: "Enter First Name", message: "First Name cannot be empty!", alertColor: .red)
             firstNameText.layer.borderColor = UIColor.red.cgColor
+            firstNameText.shake()
             return false
         } else if lastNameText.text?.isEmpty ?? true {
             alertUserWithoutAction(title: "Enter Last Name", message: "Last Name cannot be empty!", alertColor: .red)
             lastNameText.layer.borderColor = UIColor.red.cgColor
+            lastNameText.shake()
             return false
         } else if courseText.text?.isEmpty ?? true {
             alertUserWithoutAction(title: "Select Course", message: "Teacher Course cannot be kept empty!", alertColor: .red)
             courseText.layer.borderColor = UIColor.red.cgColor
+            courseText.shake()
             return false
         } else {
             return true
