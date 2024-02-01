@@ -48,9 +48,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jdg-hR-dDU">
-                        <rect key="frame" x="284" y="92" width="24" height="31"/>
+                        <rect key="frame" x="263" y="92" width="45" height="31"/>
+                        <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="Button"/>
-                        <buttonConfiguration key="configuration" style="plain"/>
+                        <buttonConfiguration key="configuration" style="plain" image="circle" catalog="system"/>
                         <connections>
                             <action selector="checkmarkAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="us4-DN-hEI"/>
                         </connections>
@@ -87,6 +88,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="circle" catalog="system" width="128" height="121"/>
         <systemColor name="systemGroupedBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

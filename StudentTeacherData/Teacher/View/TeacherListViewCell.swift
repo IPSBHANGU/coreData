@@ -37,6 +37,7 @@ class TeacherListViewCell: UITableViewCell {
         lastName.text = teacher.lastname
         course.text = teacher.course
         button.isHidden = isCheckMarkHidden
+        
     }
     
     

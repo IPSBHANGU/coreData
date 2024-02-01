@@ -10,9 +10,9 @@ import UIKit
 class EditProfileController: UIViewController {
 
     // Initalize Student Object for Navigation controller to pass Single Student as Object to Display that specific Student in EditProfileController
-    
     var students : Student?
-    
+    // empty Teacher Object Array to add Teachers when selected
+    var teachersName : [Teacher] = []
     // call StudentData Model
     let studentDataModel = StudentData()
     
@@ -22,9 +22,6 @@ class EditProfileController: UIViewController {
     @IBOutlet weak var teacherText: UITextField!
     @IBOutlet weak var courseText: UITextField!
     @IBOutlet weak var deleteButton: UIButton!
-    
-    // empty Teacher Object Array to add Teachers when selected
-    var teachersName : [Teacher] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,6 +109,8 @@ class EditProfileController: UIViewController {
     @objc func saveAction(_ sender: Any) {
         if (studentDataModel.updateDataObject(students: students, name: nameText.text ?? "Name", age: Int16(ageText.text ?? "") ?? 0, id: Int16(idText.text ?? "") ?? 0, teachers: teachersName, course: courseText.text ?? "Course")) == true {
             let okay = UIAlertAction(title: "Okay", style: .default , handler: {_ in
+                let teacherDataModel = TeacherData()
+                teacherDataModel.resetObjectState(teachers: self.teachersName)
                 self.navigationController?.popViewController(animated: true)
             })
             alertUser(title: "Student Profile Updated !", message: "Student profile was Updated successfully !", action: okay)
@@ -143,8 +142,8 @@ class EditProfileController: UIViewController {
 }
 
 extension EditProfileController: UITextFieldDelegate, TeacherSelectionDelegate {
-    func didSelectTeacher(_ teacher: Teacher) {
-        teachersName.append(teacher)
+    func didSelectTeacher(_ teacher: [Teacher]) {
+        teachersName = teacher
         updateTeacherTextField()
     }
 

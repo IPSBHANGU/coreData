@@ -11,7 +11,6 @@ import CoreData
 class TeacherData: NSObject {
     
     var teacherOBJ:[Teacher] = []
-    
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
     
     // Add Teacher Object returns Bool as result
@@ -92,5 +91,33 @@ class TeacherData: NSObject {
             }
         }
         return studentsName
+    }
+    
+    // Function to return Teacher object Array on bases of is_Selected Bool
+    func addSelectedStudents(teachers:[Teacher]=[], students:Student?) -> [Teacher]{
+        var teachersArr:[Teacher] = []
+
+        if let teacher = students?.teacher as? Set<Teacher> {
+            teachersArr = Array(teacher)
+        }
+
+        for teacher in teachers {
+            if teacher.isSelected == true {
+                teachersArr.append(teacher)
+            }
+            if teacher.isSelected == true {
+                teacher.isSelected = false
+            }
+        }
+        return teachersArr
+    }
+    
+    // reset is_Selected bool for Teacher Object
+    func resetObjectState(teachers: [Teacher] = []){
+        for teacher in teachers {
+            if teacher.isSelected == true {
+                teacher.isSelected = false
+            }
+        }
     }
 }

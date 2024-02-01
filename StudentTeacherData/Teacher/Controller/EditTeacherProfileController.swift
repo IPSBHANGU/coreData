@@ -10,20 +10,17 @@ import UIKit
 class EditTeacherProfileController: UIViewController {
     
     // Initalize Teacher Object for Navigation controller to pass Single Teacher as Object to Display that specific Teacher in EditTeacherProfileController
-    
     var teachers : Teacher?
-    
     // call TeacherData Model
     let teacherDataModel = TeacherData()
+    // empty Student Object Array to add Students when selected
+    var studentsName : [Student] = []
     
     @IBOutlet weak var firstNameText: UITextField!
     @IBOutlet weak var lastNameText: UITextField!
     @IBOutlet weak var courseText: UITextField!
     @IBOutlet weak var studentText: UITextField!
     @IBOutlet weak var deleteButton: UIButton!
-    
-    // empty Student Object Array to add Students when selected
-    var studentsName : [Student] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,6 +112,8 @@ class EditTeacherProfileController: UIViewController {
     @objc func saveAction(_ sender: Any) {
         if (teacherDataModel.updateDataObject(teachers: teachers, teacherFname: firstNameText.text ?? "First Name", teacherLname: lastNameText.text ?? "Last Name", student: studentsName, teacherCourse: courseText.text ?? "Course")) == true {
             let okay = UIAlertAction(title: "Okay", style: .default , handler: {_ in
+                let studentDataModel = StudentData()
+                studentDataModel.resetObjectState(students: self.studentsName)
                 self.navigationController?.popViewController(animated: true)
             })
             alertUser(title: "Teacher Profile Updated !", message: "Student profile was Updated successfully !", action: okay)
@@ -147,13 +146,13 @@ class EditTeacherProfileController: UIViewController {
 }
 
 extension EditTeacherProfileController: UITextFieldDelegate, StudentSelectionDelegate {
-    func didSelectStudent(_ student: Student) {
-        studentsName.append(student)
+    func didSelectStudent(_ student: [Student]) {
+        studentsName = student
         updateStudentTextField()
     }
     
     private func updateStudentTextField() {
-        let studentNames = studentsName.map { "\($0.name ?? "")" }
+        let studentNames = studentsName.map({ "\($0.name ?? "")" })
         studentText.text = studentNames.joined(separator: ", ")
     }
     

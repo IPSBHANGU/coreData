@@ -95,4 +95,32 @@ class StudentData: NSObject {
         }
         return teachersName
     }
+    
+    // Function to return Student object Array on bases of is_Selected Bool
+    func addSelectedStudents(students : [Student] = [], teachers : Teacher?) -> [Student]{
+        var studentsArr:[Student] = []
+
+        if let student = teachers?.student as? Set<Student> {
+            studentsArr = Array(student)
+        }
+
+        for student in students {
+            if student.isSelected == true {
+                studentsArr.append(student)
+            }
+            if student.isSelected == true {
+                student.isSelected = false
+            }
+        }
+        return studentsArr
+    }
+    
+    // reset is_Selected bool for Student Object
+    func resetObjectState(students: [Student] = []){
+        for student in students {
+            if student.isSelected == true {
+                student.isSelected = false
+            }
+        }
+    }
 }

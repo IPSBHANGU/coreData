@@ -15,12 +15,10 @@ class NewStudentProfile: UIViewController {
     @IBOutlet weak var idText: UITextField!
     @IBOutlet weak var teacherText: UITextField!
     @IBOutlet weak var courseText: UITextField!
-    
     @IBOutlet weak var submitButton: UIButton!
     
     // call StudentData Model
     let studentDataModel = StudentData()
-    
     // empty Teacher Object Array to add Teachers when selected
     var teachersName : [Teacher] = []
     
@@ -200,8 +198,8 @@ class NewStudentProfile: UIViewController {
 }
 
 extension NewStudentProfile: UITextFieldDelegate, TeacherSelectionDelegate {
-    func didSelectTeacher(_ teacher: Teacher) {
-        teachersName.append(teacher)
+    func didSelectTeacher(_ teacher: [Teacher]) {
+        teachersName = teacher
         updateTeacherTextField()
     }
     
@@ -223,7 +221,8 @@ extension UITextField {
         animation.duration = duration
         animation.values = [
             NSValue(caTransform3D: CATransform3DMakeTranslation(0, 0, 0)),
-            NSValue(caTransform3D: CATransform3DMakeTranslation(-translation, 0, 0)),
+            NSValue(caTransform3D:
+                        CATransform3DMakeTranslation(-translation, 0, 0)),
             NSValue(caTransform3D: CATransform3DMakeTranslation(translation, 0, 0)),
             NSValue(caTransform3D: CATransform3DMakeTranslation(-translation, 0, 0)),
             NSValue(caTransform3D: CATransform3DMakeTranslation(translation, 0, 0)),

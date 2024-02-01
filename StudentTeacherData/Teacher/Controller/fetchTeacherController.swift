@@ -8,7 +8,7 @@
 import UIKit
 
 protocol TeacherSelectionDelegate: AnyObject {
-    func didSelectTeacher(_ teacher: Teacher )
+    func didSelectTeacher(_ teacher: [Teacher] )
 }
 
 class fetchTeacherController: UIViewController {
@@ -17,103 +17,53 @@ class fetchTeacherController: UIViewController {
     
     // call TeacherData Model
     let teacherDataModel = TeacherData()
-    
     // empty teacher-Array object
     var teachers : [Teacher] = []
-    
     // protocol-delegate
     weak var delegate: TeacherSelectionDelegate?
-    
     // variable to enable button in Cells
     var is_FromNavigation:Bool = false
-    
     // Students Object for selecting Teachers
     var students : Student?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setTableView()
         modifyNavigationBar()
-        modifyTableView()
-        fetchTeacherRecords()
-        // Do any additional setup after loading the view.
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setTableView()
-        teacherTableView.reloadData()
+        fetchTeacherRecords()
     }
     
     func modifyNavigationBar(){
         self.navigationItem.title = "Teacher's List"
+        guard is_FromNavigation == true else { return}
         let doneButton = UIBarButtonItem(systemItem: .done)
         doneButton.target = self
         doneButton.action = #selector(doneAction)
-        if is_FromNavigation == true {
-            self.navigationItem.rightBarButtonItem = doneButton
-        }
-    }
-    
-    func modifyTableView(){
-        teacherTableView.backgroundColor = UIColor.systemGroupedBackground
+        self.navigationItem.rightBarButtonItem = doneButton
     }
     
     @objc func doneAction(){
         var teachersArr:[Teacher]?
-        
-        if let teacher = students?.teacher as? Set<Teacher> {
-            teachersArr = Array(teacher)
-        }
-
-        for teacher in teachers {
-            if teacher.isSelected == true {
-                teachersArr?.append(teacher)
-                delegate?.didSelectTeacher(teacher)
-            }
-            if teacher.isSelected == true {
-                teacher.isSelected = false
-            }
-        }
-        if teachersArr != nil {
-            students?.teacher = NSSet(array: teachersArr!)
-            
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            
-            if let context = appDelegate?.persistentContainer.viewContext {
-                do {
-                    try context.save()
-                    
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
-        }
+        teachersArr = teacherDataModel.addSelectedStudents(teachers: teachers, students: students)
+        delegate?.didSelectTeacher(teachersArr!)
         navigationController?.popViewController(animated: true)
-        
     }
     
     func setTableView(){
         teacherTableView.delegate = self
         teacherTableView.dataSource = self
         teacherTableView.register(UINib(nibName: "TeacherListViewCell", bundle: .main), forCellReuseIdentifier: "teacherList")
-        teacherTableView.reloadData()
+        teacherTableView.backgroundColor = UIColor.systemGroupedBackground
     }
     
     func fetchTeacherRecords(){
         teachers = teacherDataModel.fetchDataObjec()
+        teacherTableView.reloadData()
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension fetchTeacherController: UITableViewDelegate,UITableViewDataSource {
@@ -123,15 +73,11 @@ extension fetchTeacherController: UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "teacherList", for: indexPath) as! TeacherListViewCell
-        
-        let teacher = teachers[indexPath.row]
-
-        if is_FromNavigation == true {
-            cell.setCellData(teacher: teacher, isCheckMarkHidden: false)
-        } else {
-            cell.setCellData(teacher: teacher)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "teacherList", for: indexPath) as? TeacherListViewCell else {
+            return UITableViewCell()
         }
+        let teacher = teachers[indexPath.row]
+        cell.setCellData(teacher: teacher, isCheckMarkHidden: !is_FromNavigation)
         return cell
     }
     
