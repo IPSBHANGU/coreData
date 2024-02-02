@@ -14,7 +14,7 @@ class TeacherData: NSObject {
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
     
     // Add Teacher Object returns Bool as result
-    func insertDataObject(firstName:String, lastName:String, course:String) -> Bool{
+    func insertDataObject(firstName:String, lastName:String, course:String) -> (Bool,String,String){
        
         if let context = appDelegate?.persistentContainer.viewContext {
             let teacherObject = Teacher(context: context)
@@ -24,13 +24,12 @@ class TeacherData: NSObject {
 
             do {
                 try context.save()
-                return true
+                return (true, "Teacher Profile Created !","New Teacher profile was generated successfully")
             } catch {
                 print("Error while inserting new data Object! \(error.localizedDescription)")
-                return false
             }
         }
-        return false
+        return (false, "Student Profile Failed to create !", "There was an error while generation of new Student Profile")
     }
     
     // fetch Teacher Object returns array of teachers
@@ -47,7 +46,7 @@ class TeacherData: NSObject {
     }
     
     // save Existing Teacher Object expects Teacher Object as input and returns result
-    func updateDataObject(teachers: Teacher?, teacherFname:String, teacherLname:String, student:[Student], teacherCourse:String) -> Bool{
+    func updateDataObject(teachers: Teacher?, teacherFname:String, teacherLname:String, student:[Student], teacherCourse:String) -> (Bool,String,String){
         if let context = appDelegate?.persistentContainer.viewContext {
             // update Teacher object
             teachers?.firstname = teacherFname
@@ -57,26 +56,26 @@ class TeacherData: NSObject {
             
             do {
                 try context.save()
-                return true
+                return (true, "Teacher Profile Updated !","Teacher profile was Updated successfully !")
             } catch {
                 print("Error while saving Student profile! \(error.localizedDescription)")
             }
         }
-        return false
+        return (false, "Teacher Profile Failed to update !", "There was an error while updating of new Teacher Profile")
     }
     
     // delete teacher Object expects teacher object as input and returns result
-    func deleteDataObject(teachers: Teacher?) -> Bool{
+    func deleteDataObject(teachers: Teacher?) -> (Bool,String,String){
         if let context = appDelegate?.persistentContainer.viewContext {
             context.delete(teachers!)
             do {
                 try context.save()
-                return true
+                return (true, "Teacher Profile Deleted !","Teacher profile was Deleted successfully !")
             } catch {
-                print("Error while deleting Student profile! \(error.localizedDescription)")
+                print("Error while deleting Teacher profile! \(error.localizedDescription)")
             }
         }
-        return false
+        return (false, "Teacher Profile Failed to delete !", "There was an error while deleting Teacher Profile")
     }
         
     // fetch students from teacher object
@@ -105,9 +104,6 @@ class TeacherData: NSObject {
             if teacher.isSelected == true {
                 teachersArr.append(teacher)
             }
-            if teacher.isSelected == true {
-                teacher.isSelected = false
-            }
         }
         return teachersArr
     }
@@ -119,5 +115,13 @@ class TeacherData: NSObject {
                 teacher.isSelected = false
             }
         }
+    }
+    
+    // Verify Text Field
+    func isEmptyTextField(textField: UITextField?) -> (Bool,String,String){
+        if textField?.text?.isEmpty == true {
+            return (true, "Empty TextField", "Cannot continue with empty TextFiled")
+        }
+        return (false, " ", " ")
     }
 }

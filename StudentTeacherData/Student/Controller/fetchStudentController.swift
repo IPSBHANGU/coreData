@@ -65,7 +65,7 @@ class fetchStudentController: UIViewController {
     }
     
     func fetchStudentRecords(){
-        students = studentDataModel.fetchDataObjec()
+        students = studentDataModel.fetchDataObject()
         studentTableView.reloadData()
     }
 }

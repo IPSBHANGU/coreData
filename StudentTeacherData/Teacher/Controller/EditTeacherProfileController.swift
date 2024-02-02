@@ -110,31 +110,28 @@ class EditTeacherProfileController: UIViewController {
     }
     
     @objc func saveAction(_ sender: Any) {
-        if (teacherDataModel.updateDataObject(teachers: teachers, teacherFname: firstNameText.text ?? "First Name", teacherLname: lastNameText.text ?? "Last Name", student: studentsName, teacherCourse: courseText.text ?? "Course")) == true {
-            let okay = UIAlertAction(title: "Okay", style: .default , handler: {_ in
+        let updateDataObject = teacherDataModel.updateDataObject(teachers: teachers, teacherFname: firstNameText.text ?? "First Name", teacherLname: lastNameText.text ?? "Last Name", student: studentsName, teacherCourse: courseText.text ?? "Course")
+        
+        let okay = UIAlertAction(title: "Okay", style: .default , handler: {_ in
+            if updateDataObject.0 == true {
                 let studentDataModel = StudentData()
                 studentDataModel.resetObjectState(students: self.studentsName)
                 self.navigationController?.popViewController(animated: true)
-            })
-            alertUser(title: "Teacher Profile Updated !", message: "Student profile was Updated successfully !", action: okay)
-        } else {
-            let okay = UIAlertAction(title: "Okay", style: .default)
-            alertUser(title: "Teacher Profile Failed to update !", message: "There was an error while updating of new Student Profile", action: okay)
-        }
+            }
+        })
+        alertUser(title: updateDataObject.1, message: updateDataObject.2, action: okay)
     }
     
     @IBAction func deleteAction(_ sender: UIButton) {
         let alert = UIAlertController(title: "Do you want to delete \(teachers?.firstname ?? "First Name") \(teachers?.lastname ?? "Last Name") Profile", message: "Following will Delete user \(teachers?.firstname ?? "First Name") \(teachers?.lastname ?? "Last Name") Profile, Action cannot be Reverted", preferredStyle: .alert)
         let okay = UIAlertAction(title: "Okay", style: .default, handler: {_ in
-            if (self.teacherDataModel.deleteDataObject(teachers: self.teachers)) == true {
-                let okay = UIAlertAction(title: "Okay", style: .default , handler: {_ in
+            let deleteDataObject = self.teacherDataModel.deleteDataObject(teachers: self.teachers)
+            let okay = UIAlertAction(title: "Okay", style: .default , handler: {_ in
+                if deleteDataObject.0 == true {
                     self.navigationController?.popViewController(animated: true)
-                })
-                self.alertUser(title: "Teacher Profile Deleted !", message: "Teacher profile was Deleted successfully !", action: okay)
-            } else {
-                let okay = UIAlertAction(title: "Okay", style: .default)
-                self.alertUser(title: "Teacher Profile Failed to delete !", message: "There was an error while deleting Teacher Profile", action: okay)
-            }
+                }
+            })
+            self.alertUser(title: deleteDataObject.1, message: deleteDataObject.2, action: okay)
         })
         let cancel = UIAlertAction(title: "Cancel", style: .default)
         alert.addAction(okay)

@@ -72,34 +72,40 @@ class NewStudentProfile: UIViewController {
     }
     
     func checkTextFeilds() -> Bool{
-        if nameText.text?.isEmpty ?? true {
-            alertUserWithoutAction(title: "Enter Student Name", message: "Student Name cannot be empty!")
+        let nameTextField = studentDataModel.isEmptyTextField(textField: nameText)
+        let ageTextField = studentDataModel.isEmptyTextField(textField: ageText)
+        let idTextField = studentDataModel.isEmptyTextField(textField: idText)
+        let teacherTextField = studentDataModel.isEmptyTextField(textField: teacherText)
+        let courseTextField = studentDataModel.isEmptyTextField(textField: courseText)
+        
+        if nameTextField.0 == true {
+            alertUserWithoutAction(title: nameTextField.1, message: nameTextField.2)
             nameText.layer.borderColor = UIColor.red.cgColor
             nameText.shake()
             return false
-        } else if ageText.text?.isEmpty ?? true {
-            alertUserWithoutAction(title: "Enter Student Age", message: "Student Age required!")
+        } else if ageTextField.0 == true {
+            alertUserWithoutAction(title: ageTextField.1, message: ageTextField.2)
             ageText.layer.borderColor = UIColor.red.cgColor
             ageText.shake()
             return false
-        } else if idText.text?.isEmpty ?? true {
-            alertUserWithoutAction(title: "Enter Student ID", message: "Student ID required!")
+        } else if checkAgeTextField() == false {
+            return false
+        } else if idTextField.0 == true {
+            alertUserWithoutAction(title: idTextField.1, message: idTextField.2)
             idText.layer.borderColor = UIColor.red.cgColor
             idText.shake()
             return false
-        } else if teacherText.text?.isEmpty ?? true {
-            alertUserWithoutAction(title: "Select Teacher", message: "Teacher Field cannot be empty!")
+        } else if checkIDTextField() == false {
+            return false
+        } else if teacherTextField.0 == true {
+            alertUserWithoutAction(title: teacherTextField.1, message: teacherTextField.2)
             teacherText.layer.borderColor = UIColor.red.cgColor
             teacherText.shake()
             return false
-        } else if courseText.text?.isEmpty ?? true {
-            alertUserWithoutAction(title: "Select Course", message: "Student Course cannot be kept empty!")
+        } else if courseTextField.0 == true {
+            alertUserWithoutAction(title: courseTextField.1, message: courseTextField.2)
             courseText.layer.borderColor = UIColor.red.cgColor
             courseText.shake()
-            return false
-        } else if checkAgeTextField() == false {
-            return false
-        } else if checkIDTextField() == false {
             return false
         } else {
             return true
@@ -107,10 +113,11 @@ class NewStudentProfile: UIViewController {
     }
     
     func checkAgeTextField() -> Bool{
-        if textFieldContainsOnlyInt(ageText){
+        let checkTextField = studentDataModel.textFieldContainsOnlyInt(ageText)
+        if checkTextField.0 == true {
             return true
         } else {
-            alertUserWithoutAction(title: "Enter Valid Student Age", message: "Student Age should only be in Numbers!")
+            alertUserWithoutAction(title: checkTextField.1, message: checkTextField.2)
             ageText.layer.borderColor = UIColor.red.cgColor
             ageText.shake()
             return false
@@ -119,10 +126,11 @@ class NewStudentProfile: UIViewController {
     }
     
     func checkIDTextField() -> Bool{
-        if textFieldContainsOnlyInt(idText){
+        let textFieldCheck = studentDataModel.textFieldContainsOnlyInt(idText)
+        if textFieldCheck.0 == true {
             return true
         } else {
-            alertUserWithoutAction(title: "Enter Valid Student ID", message: "Student ID should only be in Numbers!")
+            alertUserWithoutAction(title: textFieldCheck.1, message: textFieldCheck.2)
             idText.layer.borderColor = UIColor.red.cgColor
             idText.shake()
             return false
@@ -145,18 +153,15 @@ class NewStudentProfile: UIViewController {
     
     @IBAction func submitAction(_ sender: Any) {
         if checkTextFeilds() == true {
-            if (studentDataModel.insertDataObject(name: nameText.text ?? "Name", age: Int16(ageText.text ?? "") ?? 0+1, id: Int16(idText.text ?? "") ?? 0+1, course: courseText.text ?? "Course", teachersName: teachersName)) == true {
-                let okay = UIAlertAction(title: "Okay", style: .default , handler: {_ in
-                    // reset Feilds after data insertion
-                    self.resetTextFeilds()
+            let insertObject = studentDataModel.insertDataObject(name: nameText.text ?? "Name", age: Int16(ageText.text ?? "") ?? 0, id: Int16(idText.text ?? "") ?? 0, course: courseText.text ?? "Course", teachersName: teachersName)
+            let okay = UIAlertAction(title: "Okay", style: .default , handler: {_ in
+                // reset Feilds after data insertion
+                self.resetTextFeilds()
+                if insertObject.0 == true {
                     self.navigationController?.popViewController(animated: true)
-                })
-                alertUser(title: "Student Profile Created !", message: "New Student profile was generated successfully", action: okay)
-            } else {
-                
-                let okay = UIAlertAction(title: "Okay", style: .default)
-                alertUser(title: "Student Profile Failed to create !", message: "There was an error while generation of new Student Profile", action: okay)
-            }
+                }
+            })
+            alertUser(title: insertObject.1, message: insertObject.2, action: okay)
         }
     }
     
@@ -176,24 +181,6 @@ class NewStudentProfile: UIViewController {
         alert.addAction(okay)
         self.present(alert, animated: true)
         
-    }
-    
-    func textFieldContainsOnlyInt(_ textField: UITextField) -> Bool {
-        // Allow only digits and optional leading "-" sign
-        let allowedCharacters = CharacterSet.decimalDigits.union(CharacterSet(charactersIn: "-"))
-        let currentText = textField.text ?? ""
-        let hasInvalidCharacters = currentText.rangeOfCharacter(from: allowedCharacters.inverted) != nil
-
-        guard !hasInvalidCharacters else {
-            return false
-        }
-
-        // Ensure the entire text can be converted to an integer (optional)
-        guard let _ = Int(currentText) else {
-            return false
-        }
-
-        return true
     }
 }
 

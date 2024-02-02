@@ -9,7 +9,6 @@ import UIKit
 
 class NewTeacherProfileController: UIViewController {
     
-    
     @IBOutlet weak var firstNameText: UITextField!
     @IBOutlet weak var lastNameText: UITextField!
     @IBOutlet weak var courseText: UITextField!
@@ -57,18 +56,22 @@ class NewTeacherProfileController: UIViewController {
     }
     
     func checkTextFeilds() -> Bool{
-        if firstNameText.text?.isEmpty ?? true {
-            alertUserWithoutAction(title: "Enter First Name", message: "First Name cannot be empty!", alertColor: .red)
+        let firstNameTextField = TeacherDataModel.isEmptyTextField(textField: firstNameText)
+        let lastNameTextField = TeacherDataModel.isEmptyTextField(textField: lastNameText)
+        let courseTextField = TeacherDataModel.isEmptyTextField(textField: courseText)
+        
+        if firstNameTextField.0 == true {
+            alertUserWithoutAction(title: firstNameTextField.1, message: firstNameTextField.2, alertColor: .red)
             firstNameText.layer.borderColor = UIColor.red.cgColor
             firstNameText.shake()
             return false
-        } else if lastNameText.text?.isEmpty ?? true {
-            alertUserWithoutAction(title: "Enter Last Name", message: "Last Name cannot be empty!", alertColor: .red)
+        } else if lastNameTextField.0 == true {
+            alertUserWithoutAction(title: lastNameTextField.1, message: lastNameTextField.2, alertColor: .red)
             lastNameText.layer.borderColor = UIColor.red.cgColor
             lastNameText.shake()
             return false
-        } else if courseText.text?.isEmpty ?? true {
-            alertUserWithoutAction(title: "Select Course", message: "Teacher Course cannot be kept empty!", alertColor: .red)
+        } else if courseTextField.0 == true {
+            alertUserWithoutAction(title: courseTextField.1, message: courseTextField.2, alertColor: .red)
             courseText.layer.borderColor = UIColor.red.cgColor
             courseText.shake()
             return false
@@ -79,20 +82,16 @@ class NewTeacherProfileController: UIViewController {
     
     @IBAction func submitAction(_ sender: Any) {
         if checkTextFeilds() == true {
-            if (TeacherDataModel.insertDataObject(firstName: firstNameText.text ?? "First Name", lastName: lastNameText.text ?? "Last Name", course: courseText.text ?? "Course")) == true {
-                let okay = UIAlertAction(title: "Okay", style: .default , handler: {_ in
-                    // reset Feilds after data insertion
-                    self.resetTextFeilds()
+            let insertObject = TeacherDataModel.insertDataObject(firstName: firstNameText.text ?? "First Name", lastName: lastNameText.text ?? "Last Name", course: courseText.text ?? "Course")
+            let okay = UIAlertAction(title: "Okay", style: .default , handler: {_ in
+                // reset Feilds after data insertion
+                self.resetTextFeilds()
+                if insertObject.0 == true {
                     self.navigationController?.popViewController(animated: true)
-                })
-                alertUser(title: "Teacher Profile Created !", message: "New Teacher profile was generated successfully", action: okay, alertColor: .black)
-            } else {
-                
-                let okay = UIAlertAction(title: "Okay", style: .default)
-                alertUser(title: "Teacher Profile Failed to create !", message: "There was an error while generation of new Teacher Profile", action: okay, alertColor: .red)
-            }
+                }
+            })
+            alertUser(title: insertObject.1, message: insertObject.2, action: okay, alertColor: .black)
         }
-
     }
 
     func alertUser(title: String, message: String, action: UIAlertAction, alertColor: UIColor) {

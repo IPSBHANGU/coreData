@@ -42,7 +42,11 @@ class TeacherListViewCell: UITableViewCell {
     
     
     @IBAction func buttonAction(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
+        if selectedTeacher?.isSelected == true {
+            sender.isSelected = true
+        } else {
+            sender.isSelected = !sender.isSelected
+        }
         selectedTeacher?.isSelected = sender.isSelected
     }
     
